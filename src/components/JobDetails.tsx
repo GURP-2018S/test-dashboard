@@ -26,7 +26,8 @@ interface IFeatureResult {
 
 function TabContainer(props: any) {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <Typography component="div" style={{ padding:"3vh 10vw",
+      display: "flex", flexWrap: "nowrap", overflow: "auto"}}>
       {props.children}
     </Typography>
   );
@@ -34,13 +35,22 @@ function TabContainer(props: any) {
 
 const styles = (theme: Theme) => ({
   root: {
+    backgroundColor: theme.palette.background.paper,
     flexGrow: 1,
-    width: "100%",
-    backgroundColor: theme.palette.background.paper
-  }
+    marginTop: "-3vh",
+    width: "100%"
+  },
+  marginPage: {
+    margin: 'auto',
+    width: "80%",
+  },
+
+  marginBar: {
+    marginBottom: theme.spacing.unit,
+  },
 });
 
-interface IProps extends WithStyles<"root"> {
+interface IProps extends WithStyles<"root" | "marginPage" | 'marginBar'> {
   detailData: IJobDetail;
 }
 
@@ -64,8 +74,9 @@ class JobDetails extends React.Component<IProps, IState> {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" className={classes.marginBar}>
           <Tabs
+            className={classes.marginPage}
             value={value}
             onChange={this.handleChange}
             scrollable={true}
@@ -98,6 +109,7 @@ class JobDetails extends React.Component<IProps, IState> {
                       content={<ScenarioDetail scenarioData={e} />}
                     />
                   ))}
+                  <div style={{ color: "white" }}>__________________{/* make cell for right space */}</div>
                 </TabContainer>
               )
           )
