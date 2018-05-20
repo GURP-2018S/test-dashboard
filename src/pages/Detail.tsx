@@ -41,7 +41,7 @@ class Detail extends React.Component<IProps, IState> {
     return (
       <>
         {detailData ? (
-          <JobDetails detailData={detailData} />
+          <JobDetails detailData={detailData}/>
         ) : (
           <Typography variant="display2" align="center">
             {jobID

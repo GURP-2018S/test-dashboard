@@ -12,7 +12,6 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = (theme: Theme) => ({
   root: {
-    width: "90%"
   },
   button: {
     marginRight: theme.spacing.unit

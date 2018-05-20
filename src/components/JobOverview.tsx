@@ -31,11 +31,23 @@ interface IProps {
   overviewData: IJobOverview;
 }
 
+const lightGrey = "#FAFAFA";
+const successColor = "#3F51B5";
+const failColor = "#BF360C";
+function colorDecision(a:string, b:boolean){
+  return a === "finished" ?
+    b ? successColor : failColor
+    : lightGrey
+}
+
 type PropTypes = IProps &
   WithStyles<
     | "root"
+    | "marginPage"
     | "heading"
     | "secondaryHeading"
+    | "jobTitle"
+    | "jobAction"
     | "icon"
     | "details"
     | "column"
@@ -48,12 +60,33 @@ const styles = (theme: Theme) => ({
   root: {
     width: "100%"
   },
+  marginPage: {
+    margin: "auto",
+    marginTop: "2vh !important",
+    width: "80%",
+  },
   heading: {
     fontSize: theme.typography.pxToRem(20)
   },
   secondaryHeading: {
+    border: "1px solid",
+    borderRadius: 4,
     fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary
+    // color: theme.palette.text.secondary,
+    height: 28,
+    width: 80,
+
+    paddingTop: 4,
+  },
+  jobTitle: {
+    height: 72,
+  },
+  jobAction: {
+    backgroundColor: lightGrey,
+    padding: "8px 24px",
+  },
+  chip: {
+    color: "#424242",
   },
   icon: {
     verticalAlign: "bottom",
@@ -61,7 +94,8 @@ const styles = (theme: Theme) => ({
     width: 20
   },
   details: {
-    alignItems: "center"
+    alignItems: "center",
+    padding: "8px 24px 16px 24px",
   },
   column: {
     flexBasis: "33.33%"
@@ -83,8 +117,8 @@ function JobOverview(props: PropTypes) {
   const { overviewData, classes } = props;
   return (
     <div className={classes.root}>
-      <ExpansionPanel defaultExpanded={true}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <ExpansionPanel defaultExpanded={true} className={classes.marginPage}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.jobTitle}>
           <div className={classes.column}>
             <Typography className={classes.heading}>
               {overviewData.name}
@@ -97,13 +131,17 @@ function JobOverview(props: PropTypes) {
             <Chip label={overviewData.state} className={classes.chip} />
           </div>
           <div className={classes.column}>
-            <Typography className={classes.secondaryHeading}>
+            <div className={classes.secondaryHeading}
+                 style={{ borderColor: colorDecision(overviewData.state, overviewData.success)}}>
+              <Typography align="center" variant="body2"
+                          style={{ color: colorDecision(overviewData.state, overviewData.success) }}>
               {overviewData.state === "finished"
                 ? overviewData.success
                   ? "성공"
                   : "실패"
                 : ""}
-            </Typography>
+              </Typography>
+            </div>
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
@@ -128,7 +166,7 @@ function JobOverview(props: PropTypes) {
           </div>
         </ExpansionPanelDetails>
         <Divider />
-        <ExpansionPanelActions>
+        <ExpansionPanelActions className={classes.jobAction}>
           <Button size="small" color="secondary">
             테스트 취소
           </Button>

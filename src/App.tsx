@@ -16,6 +16,7 @@ import MenuList from "@material-ui/core/MenuList/MenuList";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
+// icons
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Edit from "@material-ui/icons/Edit";
@@ -23,7 +24,14 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 const styles = (theme: Theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+  },
+  marginPage: {
+    margin: 'auto',
+    width: "80%",
+  },
+  appbarCss: {
+    marginBottom: "3vh",
   },
   flex: {
     flex: 1
@@ -41,7 +49,7 @@ const styles = (theme: Theme) => ({
     }
   },
   primary: {},
-  icon: {}
+  icon: {},
 });
 
 export interface IMenuData {
@@ -52,7 +60,7 @@ export interface IMenuData {
 
 interface IProps
   extends WithStyles<
-      "root" | "flex" | "menuButton" | "menuItem" | "primary" | "icon"
+      "root" | "flex" | "menuButton" | "menuItem" | "primary" | "icon" | "marginPage" | 'appbarCss'
     > {}
 
 interface IState {
@@ -92,8 +100,8 @@ class App extends React.Component<IProps, IState> {
     return (
       <Router>
         <div className={classes.root}>
-          <AppBar position="static">
-            <Toolbar>
+          <AppBar position="sticky" className={classes.appbarCss}>
+            <Toolbar className={classes.marginPage}>
               <IconButton
                 className={classes.menuButton}
                 color="inherit"
