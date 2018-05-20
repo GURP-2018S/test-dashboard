@@ -11,6 +11,7 @@ interface IProps extends RouteComponentProps<{ jobID: string }, {}> {}
 
 interface IState {
   detailData?: IJobDetail;
+  loading: boolean;
 }
 
 async function getJobDetail(jobID: string) {
@@ -24,7 +25,7 @@ class Detail extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.state = { detailData: undefined };
+    this.state = { detailData: undefined, loading: true };
   }
 
   public componentDidMount() {
@@ -34,7 +35,7 @@ class Detail extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { detailData } = this.state;
+    const { detailData, loading } = this.state;
     const jobID: string | undefined = this.props.match.params.jobID;
 
     return (
@@ -44,7 +45,9 @@ class Detail extends React.Component<IProps, IState> {
         ) : (
           <Typography variant="display2" align="center">
             {jobID
-              ? `해당하는 ID (${jobID}) 의 잡이 없습니다.`
+              ? loading
+                ? "로딩 중 입니다."
+                : `해당하는 ID (${jobID}) 의 잡이 없습니다.`
               : "잡 ID를 입력해주세요."}
           </Typography>
         )}

@@ -33,7 +33,7 @@ class Dashboard extends React.Component<{}, IState> {
 
     return (
       <>
-        {jobList ? (
+        {jobList && jobList.length > 0 ? (
           jobList.map((element: IJobOverview, idx: number) => (
             <JobOverview key={idx} overviewData={element} />
           ))

@@ -95,11 +95,16 @@ class ScenarioDetail extends React.Component<IProps, IState> {
               <Step key={label.name} {...props}>
                 <StepLabel {...labelProps}>
                   <Chip label={label.keyword} className={classes.chip} />
-                  {label.name}
+                  {label.name
+                    .split(" ")
+                    .slice(1)
+                    .join(" ")}
                 </StepLabel>
                 <StepContent active={true}>
                   <Typography>{label.line} 번째 줄</Typography>
-                  <Typography>실행 시간: {label.duration} ms</Typography>
+                  <Typography>
+                    실행 시간: {Math.floor(label.duration / 1000000)} ms
+                  </Typography>
                 </StepContent>
               </Step>
             );

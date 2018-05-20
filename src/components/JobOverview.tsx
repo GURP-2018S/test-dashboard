@@ -98,7 +98,11 @@ function JobOverview(props: PropTypes) {
           </div>
           <div className={classes.column}>
             <Typography className={classes.secondaryHeading}>
-              {overviewData.success ? "성공" : "실패"}
+              {overviewData.state === "finished"
+                ? overviewData.success
+                  ? "성공"
+                  : "실패"
+                : ""}
             </Typography>
           </div>
         </ExpansionPanelSummary>

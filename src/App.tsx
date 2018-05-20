@@ -160,7 +160,7 @@ class App extends React.Component<IProps, IState> {
           </AppBar>
 
           <Route exact={true} path="/" component={Home} />
-          <Route path="/detail/:job_id" component={Detail} />
+          <Route path="/detail/:jobID" component={Detail} />
           <Route path="/features" component={Features} />
         </div>
       </Router>
