@@ -1,30 +1,54 @@
-import * as React from 'react';
+import * as React from "react";
 
-import JobOverview from '../components/JobOverview';
+import axios from "axios";
 
-const dummy = {
-    id: "1234",
-    name: "UI 시나리오 테스트", // Job name (ex. ui test)
-    description: "여기는 세부설명 항목입니다. 여기는 세부설명 항목입니다. 여기는 세부설명 항목입니다. 여기는 세부설명 항목입니다. 여기는 세부설명 항목입니다.",
-    state: "finished" as "finished",
-    success: true,
-    queuedAt: "오늘 오전 1시 34분",
-    scheduledAt: "오늘 오전 1시 34분",
-    startedAt: "오늘 오전 1시 36분",
-    finishedAt: "오늘 오전 1시 37분"
-};
+import Typography from "@material-ui/core/Typography/Typography";
 
-const Dashboard = () => {
+import JobOverview, { IJobOverview } from "../components/JobOverview";
 
-    const testList = [dummy, dummy, dummy];
+interface IState {
+  jobList?: IJobOverview[];
+}
+
+async function getJobList() {
+  const response = await axios.get<IJobOverview[]>(
+    `${process.env.REACT_APP_URI}/jobs`
+  );
+  return response.data;
+}
+
+class Dashboard extends React.Component<{}, IState> {
+  constructor(props: {}) {
+    super(props);
+
+    this.state = { jobList: undefined };
+  }
+
+  public componentDidMount() {
+    this.loadData();
+  }
+
+  public render() {
+    const { jobList } = this.state;
 
     return (
-        <>
-            {testList.map((element, idx) =>
-                <JobOverview key={idx} overviewData={element}/>
-            )}
-        </>
+      <>
+        {jobList ? (
+          jobList.map((element: IJobOverview, idx: number) => (
+            <JobOverview key={idx} overviewData={element} />
+          ))
+        ) : (
+          <Typography variant="display2" align="center">
+            실행한 잡이 없습니다.
+          </Typography>
+        )}
+      </>
     );
-};
+  }
+
+  public loadData() {
+    getJobList().then(value => this.setState({ jobList: value }));
+  }
+}
 
 export default Dashboard;
