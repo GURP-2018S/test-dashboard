@@ -138,7 +138,8 @@ class JobDetails extends React.Component<IProps, IState> {
                         <Typography variant={"subheading"}>
                             {`성공: ${currentProjectResult.success},
                             시작시간: ${new Date(currentProjectResult.startTime)},
-                            종료시간: ${new Date(currentProjectResult.endTime)}`}
+                            종료시간: ${new Date(currentProjectResult.endTime)},
+                            전체 테스트 수: ${currentProjectResult.suiteResults.length}`}
                         </Typography>
                     </div>
                     <AppBar position="static" color="default" className={classes.marginBar}>
