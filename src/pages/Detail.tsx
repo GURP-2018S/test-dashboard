@@ -5,17 +5,18 @@ import axios from "axios";
 
 import Typography from "@material-ui/core/Typography/Typography";
 
-import JobDetails, { IJobDetail } from "../components/JobDetails";
+import JobDetails from "../components/JobDetails";
+import {ITestJobOverview} from "../models/TestResult";
 
 interface IProps extends RouteComponentProps<{ jobID: string }, {}> {}
 
 interface IState {
-  detailData?: IJobDetail;
+  detailData?: ITestJobOverview;
   loading: boolean;
 }
 
 async function getJobDetail(jobID: string) {
-  const response = await axios.get<IJobDetail>(
+  const response = await axios.get<ITestJobOverview>(
     `${process.env.REACT_APP_URI}/jobs/${jobID}`
   );
   return response.data;
@@ -41,7 +42,7 @@ class Detail extends React.Component<IProps, IState> {
     return (
       <>
         {detailData ? (
-          <JobDetails detailData={detailData}/>
+          <JobDetails detailData={detailData.result}/>
         ) : (
           <Typography variant="display2" align="center">
             {jobID
