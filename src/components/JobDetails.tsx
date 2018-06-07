@@ -3,6 +3,7 @@ import * as React from "react";
 import {Theme, withStyles, WithStyles} from "@material-ui/core/styles";
 
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -19,6 +20,9 @@ import ScenarioCard from "./ScenarioCard";
 import ScenarioDetail from "./ScenarioDetail";
 
 import {ITestJobResult} from "../models/TestResult";
+
+const successColor = "#3F51B5";
+const failColor = "#BF360C";
 
 function TabContainer(props: any) {
     return (
@@ -46,13 +50,16 @@ const styles = (theme: Theme) => ({
         marginBottom: theme.spacing.unit,
     },
     menu: {
-        width: '100%',
-        maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
+        width: "18vw",
     },
+    detailInfo: {
+        fontSize: "0.875em",
+        lineHeight: "1.4em",
+    }
 });
 
-interface IProps extends WithStyles<"root" | "marginPage" | 'marginBar' | "menu"> {
+interface IProps extends WithStyles<"root" | "marginPage" | 'marginBar' | "menu" | "detailInfo"> {
     detailData: ITestJobResult;
 }
 
@@ -102,7 +109,7 @@ class JobDetails extends React.Component<IProps, IState> {
         return (
             <>
                 <div className={classes.root}>
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex'}} className={classes.marginPage}>
                         <div className={classes.menu}>
                             <List component="nav">
                                 <ListItem
@@ -135,11 +142,16 @@ class JobDetails extends React.Component<IProps, IState> {
                                 ))}
                             </Menu>
                         </div>
-                        <Typography variant={"subheading"}>
-                            {`성공: ${currentProjectResult.success},
-                            시작시간: ${new Date(currentProjectResult.startTime)},
-                            종료시간: ${new Date(currentProjectResult.endTime)},
-                            전체 테스트 수: ${currentProjectResult.suiteResults.length}`}
+                        <Typography variant={"subheading"} style={{ display: "flex" }}>
+                          <Button disabled={true} variant="outlined" style={{ borderColor: currentProjectResult.success ? successColor : failColor,
+                            color: currentProjectResult.success ? successColor: failColor, height: "30%", margin: "auto",}}>
+                            {currentProjectResult.success ? "성공" : "실패"}
+                            </Button>
+                          <div style={{ borderLeft: "1px solid #f0f0f0", margin: "auto", marginLeft: 12, paddingLeft: 12}}>
+                            <div className={classes.detailInfo}>{`시작시간: ${new Date(currentProjectResult.startTime)}}`}</div>
+                            <div className={classes.detailInfo}>{`종료시간: ${new Date(currentProjectResult.endTime)}`}</div>
+                            <div className={classes.detailInfo}>{`전체 테스트 수: ${currentProjectResult.suiteResults.length}`}</div>
+                          </div>
                         </Typography>
                     </div>
                     <AppBar position="static" color="default" className={classes.marginBar}>

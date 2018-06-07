@@ -42,13 +42,14 @@ class TestUploader extends React.Component<{}, IState> {
     public render() {
         return (
             <Form>
-                <Typography variant={'headline'}>File Upload</Typography>
+              <Typography variant={'headline'}>File Upload</Typography>
                 <Input type="file" onChange={this.onChange}/>
                 <Button
                     type="submit"
                     onClick={this.onFormSubmit}
-                    disabled={this.state.buttonDisabled}>
-                Upload
+                    disabled={this.state.buttonDisabled}
+                    style={{ border: "1px solid grey", borderRadius: 8, margin: 2 }}>
+                  {this.state.buttonDisabled ? "Upload your test file" : "Upload"}
                 </Button>
             </Form>
         )
