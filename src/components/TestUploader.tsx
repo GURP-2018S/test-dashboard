@@ -7,6 +7,8 @@ import Form from '@material-ui/core/FormGroup';
 import Input from '@material-ui/core/Input';
 import Typography from "@material-ui/core/Typography";
 
+import {AttachFile} from '@material-ui/icons'
+
 interface IState {
     file?: File;
     buttonDisabled: boolean;
@@ -41,14 +43,14 @@ class TestUploader extends React.Component<{}, IState> {
 
     public render() {
         return (
-            <Form>
-              <Typography variant={'headline'}>File Upload</Typography>
-                <Input type="file" onChange={this.onChange}/>
+            <Form style={{ borderTop: "1px solid #eee", marginTop: "2vh", paddingTop: "1vh"}}>
+              <Typography variant={'headline'} style={{display: "flex"}}><AttachFile style={{paddingTop: 4}}/>File Upload</Typography>
+                <Input type="file" onChange={this.onChange} style={{paddingLeft: 8}}/>
                 <Button
                     type="submit"
                     onClick={this.onFormSubmit}
                     disabled={this.state.buttonDisabled}
-                    style={{ border: "1px solid grey", borderRadius: 8, margin: 2 }}>
+                    style={{ border: "1px solid grey", borderRadius: 8, margin: 2, }}>
                   {this.state.buttonDisabled ? "Upload your test file" : "Upload"}
                 </Button>
             </Form>

@@ -21,7 +21,7 @@ const Features = ({match}: RouteComponentProps<IParam>) => (
     <div style={{ margin: 'auto', width: "80%" }}>
       <Link to={`${match.url}/create`}>
         <Chip label="생성하기" avatar={<Avatar style={{backgroundColor: bgColor, color: "white"}}><Create/></Avatar>}
-        style={{backgroundColor: bgColor, color: "white", margin: 4, marginBottom: "1vh"}} />
+        style={{backgroundColor: bgColor, color: "white", margin: 4, marginBottom: "1vh"}}/>
         </Link>
         <Route exact={true} path={match.url} render={select}/>
         <Route path={`${match.url}/edit/:featureID`} component={Feature}/>
